@@ -11,13 +11,13 @@ workflows and systems that need careful modelling.
 
 ## Selected work
 
-- **[Cracktrader](https://cracktrader.github.io/docs/)** — my flagship
-  collaborative project: a Python trading framework with shared contracts
-  across backtest, paper, sandbox and live execution. Its test tree contains
-  426 Python files and its documented benchmark exceeds 55,000 candles/second.
+- **[Cracktrader](https://cracktrader.github.io/docs/)** — my flagship project:
+  a Python trading framework with shared contracts across backtest, paper,
+  sandbox and live execution. Its test tree contains more than 400 Python files
+  and its documented benchmark exceeds 55,000 candles/second.
 - **[Curriculum Graph](https://github.com/TheTailorRetailored/curriculum-graph)** —
-  a 2,661-node YAML ontology with schema validation, graph analysis, auditable
-  patching, structured exports and an MCP interface.
+  an evolving 2,500+ node YAML ontology with schema validation, graph analysis,
+  auditable patching, structured exports and an MCP interface.
 - **[Maff](https://github.com/TheTailorRetailored/maff)** — a TypeScript, React
   and PostgreSQL mathematics research workspace with authenticated services,
   audit logs, MCP tools and a Lean worker.
@@ -26,8 +26,8 @@ workflows and systems that need careful modelling.
   folder-based backup format.
 
 Other public work includes a [LaTeX MCP server](https://github.com/TheTailorRetailored/latex-mcp),
-the Go/FUSE experiment [VMapFS](https://github.com/TheTailorRetailored/VMapFS),
-and my [MPhil thesis in applied mathematics](https://github.com/TheTailorRetailored/MPhilThesis).
+the Go/FUSE filesystem tool [VMapFS](https://github.com/TheTailorRetailored/VMapFS),
+and my [animal foraging modelling research](https://github.com/TheTailorRetailored/MPhilThesis).
 
 **[Portfolio](https://thetailorretailored.github.io/)** ·
 **[CV](https://thetailorretailored.github.io/assets/Lachlan-Bridges-CV.pdf)** ·
