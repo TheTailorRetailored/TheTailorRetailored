@@ -11,10 +11,12 @@ workflows and systems that need careful modelling.
 
 ## Selected work
 
-- **[Cracktrader](https://cracktrader.github.io/docs/)** — my flagship project:
+- **[Cracktrader](https://cracktrader.github.io/)** — my flagship project:
   a Python trading framework with shared contracts across backtest, paper,
   sandbox and live execution. Its test tree contains more than 400 Python files
-  and its documented benchmark exceeds 55,000 candles/second.
+  and its documented benchmark exceeds 55,000 candles/second. A deeper
+  [technical reference](https://cracktrader.github.io/docs/) documents the
+  runtime model and mode boundaries.
 - **[Curriculum Graph](https://github.com/TheTailorRetailored/curriculum-graph)** —
   an evolving 2,500+ node YAML ontology with schema validation, graph analysis,
   auditable patching, structured exports and an MCP interface.
