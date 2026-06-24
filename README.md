@@ -1,35 +1,44 @@
 # Lachlan Bridges
 
-Backend and data software developer in Adelaide, Australia, with a background
-in applied mathematics. I build Python and TypeScript tools for data, research,
-automation and knowledge systems.
+Applied mathematician and backend/data software developer in Adelaide, Australia.
+I build systems that stay understandable: explicit data models, tested boundaries,
+reproducible behaviour and documentation that says where the limits are.
 
-I am currently looking for backend, data engineering, research software,
-technical support or AI-tooling roles. I am strongest where software meets
-messy domain knowledge: APIs, validation pipelines, internal tools, auditable
-workflows and systems that need careful modelling.
+## What I’m looking for
 
-## Selected work
+I’m open to Adelaide or remote roles in backend development, data engineering,
+internal tools, research software and AI-tooling infrastructure—particularly work
+in Python or TypeScript where the domain is complex and correctness matters more
+than surface polish.
 
-- **[Cracktrader](https://cracktrader.github.io/)** — my flagship project:
-  a Python trading framework with shared contracts across backtest, paper,
-  sandbox and live execution. Its test tree contains more than 400 Python files
-  and its documented benchmark exceeds 55,000 candles/second. A deeper
-  [technical reference](https://cracktrader.github.io/docs/) documents the
-  runtime model and mode boundaries.
+Core tools: **Python · TypeScript · Go · PostgreSQL · Docker · REST · MCP · GitHub Actions**
+
+## Selected engineering work
+
+- **[CrackTrader](https://cracktrader.github.io/)** — a private, production-grade
+  quantitative runtime with one strategy contract across backtest, paper, sandbox
+  and live execution. Its engineering surface includes **1,706 test functions across
+  426 test files**, 47 contract modules and a documented **642k events/second** feed
+  benchmark. The public site covers the architecture without exposing proprietary
+  strategies, data or results.
 - **[Curriculum Graph](https://github.com/TheTailorRetailored/curriculum-graph)** —
-  an evolving 2,500+ node YAML ontology with schema validation, graph analysis,
-  auditable patching, structured exports and an MCP interface.
-- **[Maff](https://github.com/TheTailorRetailored/maff)** — a TypeScript, React
-  and PostgreSQL mathematics research workspace with authenticated services,
-  audit logs, MCP tools and a Lean worker.
+  an evolving 2,500+ node curriculum ontology with schema validation, graph analysis,
+  auditable patching, deterministic exports, a browser explorer and an MCP interface.
+- **[Maff](https://github.com/TheTailorRetailored/maff)** — a self-hosted TypeScript,
+  React and PostgreSQL research platform with authenticated services, audit logs,
+  MCP tools, Docker deployment and a Lean 4 worker.
 - **[Signal BackupV2 Exporter](https://github.com/TheTailorRetailored/signal-backup-v2-exporter)** —
-  selective HTML, Markdown and JSON export from Signal Android's newer
-  folder-based backup format.
+  selective HTML, Markdown and JSON export from Signal Android’s newer folder-based
+  backup format, developed and tested without publishing personal data.
+- **[VMapFS](https://github.com/TheTailorRetailored/VMapFS)** — a Go/FUSE filesystem
+  that presents persistent alternate layouts without moving or modifying source data.
+- **[LaTeX MCP](https://github.com/TheTailorRetailored/latex-mcp)** — a compact FastMCP
+  service for compiling trusted LaTeX into cached PDFs with reusable templates and
+  repeatable Docker deployment.
 
-Other public work includes a [LaTeX MCP server](https://github.com/TheTailorRetailored/latex-mcp),
-the Go/FUSE filesystem tool [VMapFS](https://github.com/TheTailorRetailored/VMapFS),
-and my [animal foraging modelling research](https://github.com/TheTailorRetailored/MPhilThesis).
+My background includes an MPhil in Applied Mathematics, university teaching,
+research software and an international logistics-modelling placement at the
+Technical University of Munich.
 
 **[Portfolio](https://thetailorretailored.github.io/)** ·
 **[CV](https://thetailorretailored.github.io/assets/Lachlan-Bridges-CV.pdf)** ·
