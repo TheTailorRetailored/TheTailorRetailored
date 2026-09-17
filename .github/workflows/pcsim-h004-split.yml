@@ -1,0 +1,77 @@
+name: PCSIM H004 split portable environment
+
+on:
+  push:
+    branches:
+      - pcsim-h004-toolchain
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  split-artifact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Download successful portable environment artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p /tmp/original
+          gh run download 35237413455 --repo TheTailorRetailored/TheTailorRetailored --name pcsim-h004-lean-env --dir /tmp/original
+          ls -lh /tmp/original
+          test -f /tmp/original/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz
+          test -f /tmp/original/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz.sha256
+          sha256sum -c /tmp/original/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz.sha256
+
+      - name: Split below connector limit and hash chunks
+        shell: bash
+        run: |
+          set -euxo pipefail
+          split -b 400M -d -a 2 /tmp/original/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz /tmp/pcsim-h004-env-part-
+          ls -lh /tmp/pcsim-h004-env-part-*
+          sha256sum /tmp/pcsim-h004-env-part-* > /tmp/PCSIM-H004-PARTS-SHA256SUMS.txt
+          cp /tmp/original/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz.sha256 /tmp/PCSIM-H004-ORIGINAL-SHA256.txt
+
+      - name: Upload part 00
+        uses: actions/upload-artifact@v4
+        with:
+          name: pcsim-h004-env-part-00
+          path: /tmp/pcsim-h004-env-part-00
+          compression-level: 0
+      - name: Upload part 01
+        uses: actions/upload-artifact@v4
+        with:
+          name: pcsim-h004-env-part-01
+          path: /tmp/pcsim-h004-env-part-01
+          compression-level: 0
+      - name: Upload part 02
+        uses: actions/upload-artifact@v4
+        with:
+          name: pcsim-h004-env-part-02
+          path: /tmp/pcsim-h004-env-part-02
+          compression-level: 0
+      - name: Upload part 03
+        uses: actions/upload-artifact@v4
+        with:
+          name: pcsim-h004-env-part-03
+          path: /tmp/pcsim-h004-env-part-03
+          compression-level: 0
+      - name: Upload part 04
+        uses: actions/upload-artifact@v4
+        with:
+          name: pcsim-h004-env-part-04
+          path: /tmp/pcsim-h004-env-part-04
+          compression-level: 0
+      - name: Upload manifests
+        uses: actions/upload-artifact@v4
+        with:
+          name: pcsim-h004-env-manifests
+          path: |
+            /tmp/PCSIM-H004-PARTS-SHA256SUMS.txt
+            /tmp/PCSIM-H004-ORIGINAL-SHA256.txt
+          compression-level: 0
