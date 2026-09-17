@@ -1,0 +1,88 @@
+name: PCSIM H004 Lean toolchain bundle
+
+on:
+  push:
+    branches:
+      - pcsim-h004-toolchain
+  workflow_dispatch:
+
+jobs:
+  build-toolchain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lean 4.19.0
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/elan" toolchain install leanprover/lean4:v4.19.0
+          "$HOME/.elan/bin/elan" default leanprover/lean4:v4.19.0
+          "$HOME/.elan/bin/lean" --version
+
+      - name: Resolve Mathlib 4.19.0 and compiled cache
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p /tmp/pcsim-env
+          cd /tmp/pcsim-env
+          printf '%s\n' 'leanprover/lean4:v4.19.0' > lean-toolchain
+          cat > lakefile.toml <<'EOF'
+          name = "PCSIMEnv"
+          version = "0.1.0"
+          defaultTargets = ["PCSIMEnv"]
+
+          [[lean_lib]]
+          name = "PCSIMEnv"
+
+          [[require]]
+          name = "mathlib"
+          git = "https://github.com/leanprover-community/mathlib4.git"
+          rev = "v4.19.0"
+          EOF
+          mkdir -p PCSIMEnv
+          printf '%s\n' 'import Mathlib' > PCSIMEnv/Basic.lean
+          lake update
+          lake exe cache get
+          lake build
+          lean --version | tee TOOLCHAIN.txt
+          lake --version >> TOOLCHAIN.txt
+          git -C .lake/packages/mathlib rev-parse HEAD >> TOOLCHAIN.txt
+          git -C .lake/packages/mathlib describe --tags --exact-match >> TOOLCHAIN.txt
+
+      - name: Package portable Lean and olean environment
+        shell: bash
+        run: |
+          set -euxo pipefail
+          TOOLCHAIN_DIR="$HOME/.elan/toolchains/leanprover--lean4---v4.19.0"
+          mkdir -p /tmp/pcsim-bundle/toolchain /tmp/pcsim-bundle/oleans
+          cp -a "$TOOLCHAIN_DIR/bin" /tmp/pcsim-bundle/toolchain/
+          cp -a "$TOOLCHAIN_DIR/lib" /tmp/pcsim-bundle/toolchain/
+          cp /tmp/pcsim-env/TOOLCHAIN.txt /tmp/pcsim-bundle/
+          cd /tmp/pcsim-env/.lake/packages
+          for p in *; do
+            if [ -d "$p/.lake/build/lib/lean" ]; then
+              mkdir -p "/tmp/pcsim-bundle/oleans/$p"
+              cp -a "$p/.lake/build/lib/lean" "/tmp/pcsim-bundle/oleans/$p/"
+            fi
+          done
+          if [ -d /tmp/pcsim-env/.lake/build/lib/lean ]; then
+            mkdir -p /tmp/pcsim-bundle/oleans/PCSIMEnv
+            cp -a /tmp/pcsim-env/.lake/build/lib/lean /tmp/pcsim-bundle/oleans/PCSIMEnv/
+          fi
+          cd /tmp
+          tar -czf PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz pcsim-bundle
+          sha256sum PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz > PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz.sha256
+          ls -lh PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz
+
+      - name: Upload portable environment
+        uses: actions/upload-artifact@v4
+        with:
+          name: pcsim-h004-lean-env
+          path: |
+            /tmp/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz
+            /tmp/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz.sha256
+          compression-level: 0
