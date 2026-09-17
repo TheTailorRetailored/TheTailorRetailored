@@ -26,7 +26,8 @@ jobs:
           ls -lh /tmp/original
           test -f /tmp/original/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz
           test -f /tmp/original/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz.sha256
-          sha256sum -c /tmp/original/PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz.sha256
+          cd /tmp/original
+          sha256sum -c PCSIM-H004-Lean-4.19.0-Mathlib-4.19.0.tar.gz.sha256
 
       - name: Split below connector limit and hash chunks
         shell: bash
